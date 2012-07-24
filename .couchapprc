@@ -1,7 +1,0 @@
-{
-  "env" : {
-    "default" : {
-      "db" : "http://username:password@localhost:5984/relax-o-notes"
-    }
-  }
-}
