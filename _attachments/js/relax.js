@@ -30,7 +30,7 @@ $(document).ready(function(){
 			var val;
 			for(var i=0;i<data.total_rows;i++){
 				val=data.rows[i].value;
-				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http:twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a></tr>");
+				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http:twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a><p>"+val.uploader_msg+"</p></td></tr>");
 			}
 			$("#all_notes").hide().fadeIn(500);
 		},
@@ -47,7 +47,7 @@ $(document).ready(function(){
 		else{
 		$.couch.db($db).openDoc(id,{
 			success: function(obj){
-				$("#all_notes").first().append("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a></tr>").hide().fadeIn(500);
+				$("#all_notes").first().append("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a><p>"+obj.uploader_msg+"</p></td></tr>").hide().fadeIn(500);
 			},
 			error: function(data2){
 				if(data2==404){
