@@ -4981,3 +4981,9 @@ a.badge:hover {
 .invisible {
   visibility: hidden;
 }
+
+.date_time-block{
+	display: block;
+	margin-bottom: 9px;
+	color: #999;
+}
