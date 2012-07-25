@@ -5,11 +5,23 @@ $(document).ready(function(){
 		console.log("http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val());
 		var d=new Date();
 		d=d.toLocaleString();
+		var tags=$("#upload_message").val().split(" ");
+		var act_tags="", k=0;
+		for(var j=0;j<tags.length;j++){
+			if(tags[j].indexOf('#') == 0){
+				act_tags=act_tags+" "+tags[j];
+				act_tags=act_tags.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+				k++;
+			}
+		}
+		console.log(act_tags);
+		act_tags=act_tags.substring(1,act_tags.length);
 		var doc={
 			"uploaded_by": $("#uploaded_by").val(),
 			"gravatar_url": "http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val(),
 			"uploader_msg": $("#upload_message").val(),
-			"created_at": d
+			"created_at": d,
+			"tags": act_tags.split(" ")
 		};
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
@@ -29,6 +41,7 @@ $(document).ready(function(){
 	
 	$.couch.db($db).view("app/notes/",{
 		success: function(data){
+			console.log(data);
 			$("#all_notes").html('');
 			var val;
 			for(var i=0;i<data.total_rows;i++){
