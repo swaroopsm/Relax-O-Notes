@@ -2,9 +2,10 @@ $(document).ready(function(){
 	$db="relax-o-notes";
 	
 	$("#upload_file_btn").live("click", function(){
+		console.log("http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val());
 		var doc={
 			"uploaded_by": $("#uploaded_by").val(),
-			"gravatar_url": "http://gravatar.com/avatar/"+md5($("#uploaded_by").val())
+			"gravatar_url": "http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val()
 		};
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
@@ -28,8 +29,7 @@ $(document).ready(function(){
 			var val;
 			for(var i=0;i<data.total_rows;i++){
 				val=data.rows[i].value;
-				var user=val.user.substring(0,val.user.indexOf("@"));
-				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='mailto:"+val.user+"'>"+user+"</a></tr>");
+				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http:twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a></tr>");
 			}
 			$("#all_notes").hide().fadeIn(500);
 		},
@@ -40,9 +40,13 @@ $(document).ready(function(){
 	
 	$.couch.db($db).changes().onChange(function(data){
 		var id=data.results[0].id;
+		if(id=="_design/app"){
+			
+		}
+		else{
 		$.couch.db($db).openDoc(id,{
 			success: function(obj){
-				$("#all_notes").first().append("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='mailto:"+obj.uploaded_by+"'>"+obj.uploaded_by+"</a></tr>").hide().fadeIn(500);
+				$("#all_notes").first().append("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a></tr>").hide().fadeIn(500);
 			},
 			error: function(data2){
 				if(data2==404){
@@ -50,6 +54,7 @@ $(document).ready(function(){
 				}
 			}
 		});
+	 }
 	});
 	
 });
