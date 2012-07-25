@@ -5,7 +5,8 @@ $(document).ready(function(){
 		console.log("http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val());
 		var doc={
 			"uploaded_by": $("#uploaded_by").val(),
-			"gravatar_url": "http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val()
+			"gravatar_url": "http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val(),
+			"uploader_msg": $("#upload_message").val()
 		};
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
