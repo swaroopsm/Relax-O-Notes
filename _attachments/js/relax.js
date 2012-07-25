@@ -3,10 +3,13 @@ $(document).ready(function(){
 	
 	$("#upload_file_btn").live("click", function(){
 		console.log("http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val());
+		var d=new Date();
+		d=d.toLocaleString();
 		var doc={
 			"uploaded_by": $("#uploaded_by").val(),
 			"gravatar_url": "http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val(),
-			"uploader_msg": $("#upload_message").val()
+			"uploader_msg": $("#upload_message").val(),
+			"created_at": d
 		};
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
@@ -30,7 +33,7 @@ $(document).ready(function(){
 			var val;
 			for(var i=0;i<data.total_rows;i++){
 				val=data.rows[i].value;
-				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http:twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a><p>"+val.uploader_msg+"</p></td></tr>");
+				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http://twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a><p>"+val.uploader_msg+"</p></td></tr>");
 			}
 			$("#all_notes").hide().fadeIn(500);
 		},
