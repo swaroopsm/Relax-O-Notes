@@ -4,6 +4,7 @@ $(document).ready(function(){
 	$("#upload_file_btn").live("click", function(){
 		var doc={
 			"uploaded_by": $("#uploaded_by").val(),
+			"gravatar_url": "http://gravatar.com/avatar/"+md5($("#uploaded_by").val())
 		};
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
@@ -19,7 +20,6 @@ $(document).ready(function(){
 				console.log(data);
 			}
 		});
-		console.log($db);
 		return false;
 	});
 	
