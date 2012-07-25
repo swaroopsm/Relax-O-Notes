@@ -30,7 +30,7 @@ $(document).ready(function(){
 			for(var i=0;i<data.total_rows;i++){
 				val=data.rows[i].value;
 				var user=val.user.substring(0,val.user.indexOf("@"));
-				$("#all_notes").append("<span class='span10 well'><img class='thumbnail' src='"+val.avatar+"'></img>&nbsp;&nbsp;<a href='mailto:"+val.user+"'>"+user+"</a><span>");
+				$("#all_notes").append("<tr><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='mailto:"+val.user+"'>"+user+"</a></tr>");
 			}
 			$("#all_notes").hide().fadeIn(500);
 		},
