@@ -23,4 +23,13 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	$.couch.db($db).view("app/notes/",{
+		success: function(data){
+			console.log(data);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+	
 });
