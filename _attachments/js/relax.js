@@ -25,7 +25,14 @@ $(document).ready(function(){
 	
 	$.couch.db($db).view("app/notes/",{
 		success: function(data){
-			console.log(data);
+			$("#all_notes").html('');
+			var val;
+			for(var i=0;i<data.total_rows;i++){
+				val=data.rows[i].value;
+				var user=val.user.substring(0,val.user.indexOf("@"));
+				$("#all_notes").append("<span class='span10 well'><img class='thumbnail' src='"+val.avatar+"'></img>&nbsp;&nbsp;<a href='mailto:"+val.user+"'>"+user+"</a><span>");
+			}
+			$("#all_notes").hide().fadeIn(500);
 		},
 		error: function(data){
 			console.log(data);
