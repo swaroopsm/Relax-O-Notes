@@ -6,7 +6,7 @@ $(document).ready(function(){
 	$("#upload_file_btn").live("click", function(){
 		console.log("http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val());
 		var d=new Date();
-		d=d.toLocaleString();
+		d=d.toISOString();
 		var tags=$("#upload_message").val().split(" ");
 		var act_tags="", k=0;
 		for(var j=0;j<tags.length;j++){
@@ -30,8 +30,8 @@ $(document).ready(function(){
 				var id=data.id;
 				var stat=data.ok;
 				if(stat){
+					console.log(data);
 					$("#uploadModal").modal('hide');
-					
 				}
 			},
 			error: function(data){
