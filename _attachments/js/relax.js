@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	$db="relax-o-notes";
+	$url="http://localhost:5984/"+$db+"/_design/app/";
+	$flag=0;
 	
 	$("#upload_file_btn").live("click", function(){
 		console.log("http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val());
@@ -55,6 +57,7 @@ $(document).ready(function(){
 		}
 	});
 	
+	if($flag==1){
 	$.couch.db($db).changes().onChange(function(data){
 		var id=data.results[0].id;
 		if(id=="_design/app"){
@@ -63,7 +66,7 @@ $(document).ready(function(){
 		else{
 		$.couch.db($db).openDoc(id,{
 			success: function(obj){
-				$("#all_notes").first().append("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a><p>"+obj.uploader_msg+"<br><span class='date_time-block'>"+obj.created_at+"</span></p></td></tr>").hide().fadeIn(500);
+				$("#all_notes").before("<table class='table'><tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a><p>"+obj.uploader_msg+"<br><span class='date_time-block'>"+obj.created_at+"</span></p></td></tr></table>").hide().fadeIn(500);
 			},
 			error: function(data2){
 				if(data2==404){
@@ -73,5 +76,6 @@ $(document).ready(function(){
 		});
 	 }
 	});
+ }
 	
 });
