@@ -4,7 +4,6 @@ $(document).ready(function(){
 	$flag=0;
 	
 	$("#upload_file_btn").live("click", function(){
-		console.log("http://api.twitter.com/1/users/profile_image/"+$("#uploaded_by").val());
 		var d=new Date();
 		d=d.toISOString();
 		var tags=$("#upload_message").val().split(" ");
@@ -30,7 +29,6 @@ $(document).ready(function(){
 				var id=data.id;
 				var stat=data.ok;
 				if(stat){
-					console.log(data);
 					$("#uploadModal").modal('hide');
 				}
 			},
@@ -43,12 +41,12 @@ $(document).ready(function(){
 	
 	$.couch.db($db).view("app/notes/",{
 		success: function(data){
-			console.log(data);
 			$("#all_notes").html('');
 			var val;
 			for(var i=0;i<data.total_rows;i++){
 				val=data.rows[i].value;
-				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http://twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a><p>"+val.uploader_msg+"<br><span class='date_time-block'>"+val.created_at+"</span></p></td></tr>");
+				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http://twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a><p>"+val.uploader_msg+"<br><span id='timeago' title='"+val.created_at+"' class='date_time-block'></span></p></td></tr>");
+				$(".date_time-block").timeago();
 			}
 			$("#all_notes").hide().fadeIn(500);
 		},
@@ -65,7 +63,8 @@ $(document).ready(function(){
 		else{
 		$.couch.db($db).openDoc(id,{
 			success: function(obj){
-				$("#all_notes").prepend("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a><p>"+obj.uploader_msg+"<br><span class='date_time-block'>"+obj.created_at+"</span></p></td></tr>").hide().fadeIn(500);
+				$("#all_notes").prepend("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a><p>"+obj.uploader_msg+"<br><span id='timeago' title='"+obj.created_at+"' class='date_time-block'></span></p></td></tr>").hide().fadeIn(500);
+				$(".date_time-block").timeago();
 			},
 			error: function(data2){
 				if(data2==404){
@@ -75,5 +74,6 @@ $(document).ready(function(){
 		});
 	 }
 	});
+	
 	
 });
