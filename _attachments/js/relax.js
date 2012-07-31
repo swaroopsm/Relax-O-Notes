@@ -57,9 +57,8 @@ $(document).ready(function(){
 				console.log(data);
 			}
 		});
-	}
-	
-	$.couch.db($db).view("app/hashtags/",{
+		
+		$.couch.db($db).view("app/hashtags/",{
 		success: function(data){
 			$("#hashtags").html('');
 			var val;
@@ -94,6 +93,6 @@ $(document).ready(function(){
 		});
 	 }
 	});
-	
+	}
 	
 });
