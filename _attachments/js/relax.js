@@ -55,6 +55,22 @@ $(document).ready(function(){
 		}
 	});
 	
+	$.couch.db($db).view("app/hashtags/",{
+		success: function(data){
+			$("#hashtags").html('');
+			var val;
+			for(var i=0;i<data.total_rows;i++){
+				val=data.rows[i].value;
+				for(var j=0;j<val.length;j++)
+					$("#hashtags").append("<a href='#'>"+val[j]+"</a>&nbsp;&nbsp;");
+			}
+			$("#hashtags").hide().fadeIn(500);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+	
 	$.couch.db($db).changes().onChange(function(data){
 		var id=data.results[0].id;
 		if(id=="_design/app"){
