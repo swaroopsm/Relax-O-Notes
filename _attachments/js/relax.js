@@ -95,4 +95,27 @@ $(document).ready(function(){
 	});
 	}
 	
+	$("#discuss_btn").click(function(){
+		var th=$.trim($("#uploaded_by").val());
+		var dt=$.trim($("#discuss_title").val());
+		var dm=$.trim($("#discuss_message").val());
+		if(th=='' || dt=='' || dm==''){
+			if(th==''){
+				$("#uploaded_by").focus();
+			}
+			else if(dt==''){
+				$("#discuss_title").focus();
+			}
+			else if(dm==''){
+				$("#discuss_message").focus();
+			}
+			else{
+				
+			}
+		}
+		else{
+			console.log("OKAY!!");
+		}
+		return false;
+	});
 });
