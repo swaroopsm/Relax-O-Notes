@@ -16,7 +16,7 @@
           <a class="brand" href="#">Relax-O-Notes</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li><a href="#">Home</a></li>
+              <li><a href="index.html">Home</a></li>
               <li class="active"><a href="discussion.html">Discussion Forum</a></li>
                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
@@ -25,16 +25,16 @@
             </ul>
           </div><!--/.nav-collapse -->
           <div class="nav pull-right" style="padding-left: 10px;">
-        		<a data-toggle="modal" href="#uploadModal" class="btn btn-success">Tweet &raquo;</a>
+        		<a data-toggle="modal" href="#discussModal" class="btn btn-success">Discuss somethin! &raquo;</a>
         	</div>
         </div>
       </div>
     </div>
     	<!-- Uplload File Modal Box -->
-    	<div class="modal hide fade" id="uploadModal">
+    	<div class="modal hide fade" id="discussModal">
 				<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">x</button>
-					<h3>What's cookin...</h3>
+					<h3>What's in your mind...</h3>
 				</div>
 				<div class="modal-body">
 					<div class="form form-horizontal">
@@ -45,9 +45,15 @@
 				        </div>
 				      </div>
 				      <br>
+				      <div class="controls">
+				        <div class="input-prepend">
+				          <span class="add-on"><i class="icon-pencil"></i></span><input class="span3" id="uploaded_by" type="text" placeholder="Title of Discussion">
+				        </div>
+				      </div>
+				      <br>
 				       <div class="controls">
 				        <div class="input-prepend">
-				          <textarea id="upload_message" rows="3" cols="34" placeholder="A brief description"></textarea>
+				          <textarea id="upload_message" class="span4" rows="6" placeholder="Description about your discussion"></textarea>
 				        </div>
 				      </div>
 				      <br>
@@ -55,24 +61,17 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-success" id="upload_file_btn">Tweet Message!</button>
+					<button class="btn btn-success" id="discuss_btn">Discuss!</button>
 				</div>
 			</div>
     	<!-- End Upload File Modal Box -->
     <div class="container" style="padding-top: 80px;">
     	<div id="messages" class="span11"></div>
     	<div class="span9">
-    		<h3>Latest Tweets: </h3>
-    		<table class="table" id="all_notes">
+    		<h3>Latest Discussions: </h3>
+    		<table class="table" id="all_discussions">
     			
     		</table>
-    	</div>
-    	<div class="span2 well" style="padding: 5px 20px 10px 20px;">
-    		<h4>#tags</h4>
-    		<hr class="my_divider" />
-    		<div id="hashtags" class="container span2" style="word-wrap: break-word;">
-    		
-    		</div>
     	</div>
     </div>
     <script src="js/jquery.js"></script>
