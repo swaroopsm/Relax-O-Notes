@@ -143,14 +143,15 @@ $(document).ready(function(){
 	if(p=="discussion.html"){
 		$.couch.db($db).view("app/discuss/",{
 			success: function(data){
+				console.log(data);
 				$("#all_discussions").html('');
 				var val;
-				for(var i=0;i<data.total_rows;i++){
+				for(var i=0,j=0;i<data.total_rows;i++,j++){
 					val=data.rows[i].value;
-					$("#all_discussions").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='#'>"+val.title+"</a><p>"+val.message+"<br><span title='"+val.created_at+"' class='date_time-block'> by "+val.author+"</span></p></td></tr>");
+					$("#all_discussions").append("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+val.author+"' id='t"+data.rows[i].id+"' rel='tooltip' data-original-title='by "+val.author+"' target='_BLANK'><img class='thumbnail' src='"+val.avatar+"'></img></a><td><a href='#'>"+val.title+"</a><p>"+val.message+"<br><span id='' title='"+val.created_at+"' class='date_time-block'></span><a  href='#t"+data.rows[i].id+"' class='accordian-toggle help-block' data-toggle='collapse' style='color: #08c;margin-top: -8px;'>Comments("+val.comments.length+")</a></p></td></tr>");
 					$(".date_time-block").timeago();
+					$("#t"+data.rows[i].id).tooltip('hide');
 				}
-				//console.log(data);
 				$("#all_discussions").hide().fadeIn(500);
 			},
 			error: function(data){
@@ -158,4 +159,5 @@ $(document).ready(function(){
 			}
 		});
 	}
+	
 });
