@@ -139,4 +139,23 @@ $(document).ready(function(){
 		}
 		return false;
 	});
+	
+	if(p=="discussion.html"){
+		$.couch.db($db).view("app/discuss/",{
+			success: function(data){
+				$("#all_discussions").html('');
+				var val;
+				for(var i=0;i<data.total_rows;i++){
+					val=data.rows[i].value;
+					$("#all_discussions").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='#'>"+val.title+"</a><p>"+val.message+"<br><span title='"+val.created_at+"' class='date_time-block'> by "+val.author+"</span></p></td></tr>");
+					$(".date_time-block").timeago();
+				}
+				//console.log(data);
+				$("#all_discussions").hide().fadeIn(500);
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
+	}
 });
