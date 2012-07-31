@@ -3,6 +3,8 @@ $(document).ready(function(){
 	$url="http://localhost:5984/"+$db+"/_design/app/";
 	$flag=0;
 	
+	var p=$("#page_name").attr("data-page");
+	
 	$("#upload_file_btn").live("click", function(){
 		var d=new Date();
 		d=d.toISOString();
@@ -39,21 +41,23 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	$.couch.db($db).view("app/notes/",{
-		success: function(data){
-			$("#all_notes").html('');
-			var val;
-			for(var i=0;i<data.total_rows;i++){
-				val=data.rows[i].value;
-				$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http://twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a><p>"+val.uploader_msg+"<br><span id='timeago' title='"+val.created_at+"' class='date_time-block'></span></p></td></tr>");
-				$(".date_time-block").timeago();
+	if(p=="index.html"){
+		$.couch.db($db).view("app/notes/",{
+			success: function(data){
+				$("#all_notes").html('');
+				var val;
+				for(var i=0;i<data.total_rows;i++){
+					val=data.rows[i].value;
+					$("#all_notes").append("<tr id="+data.rows[i].id+"><td class='span1'><img class='thumbnail' src='"+val.avatar+"'></img><td><a href='http://twitter.com/"+val.user+"' target='_BLANK'>"+val.user+"</a><p>"+val.uploader_msg+"<br><span id='timeago' title='"+val.created_at+"' class='date_time-block'></span></p></td></tr>");
+					$(".date_time-block").timeago();
+				}
+				$("#all_notes").hide().fadeIn(500);
+			},
+			error: function(data){
+				console.log(data);
 			}
-			$("#all_notes").hide().fadeIn(500);
-		},
-		error: function(data){
-			console.log(data);
-		}
-	});
+		});
+	}
 	
 	$.couch.db($db).view("app/hashtags/",{
 		success: function(data){
