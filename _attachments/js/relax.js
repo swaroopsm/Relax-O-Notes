@@ -95,7 +95,7 @@ $(document).ready(function(){
 	});
 	}
 	
-	$("#discuss_btn").click(function(){
+	$("#discuss_btn").live("click",function(){
 		var th=$.trim($("#uploaded_by").val());
 		var dt=$.trim($("#discuss_title").val());
 		var dm=$.trim($("#discuss_message").val());
@@ -114,7 +114,28 @@ $(document).ready(function(){
 			}
 		}
 		else{
-			console.log("OKAY!!");
+			var d=new Date();
+			d=d.toISOString();
+			var doc={
+				"d_title": dt,
+				"d_author": th,
+				"d_msg": dm ,
+				"d_date": d,
+				"author_pic": "http://api.twitter.com/1/users/profile_image/"+th,
+				"d_comments": ""
+			};
+			$.couch.db($db).saveDoc(doc,{
+			success: function(data){
+				var id=data.id;
+				var stat=data.ok;
+				if(stat){
+					$("#discussModal").modal('hide');
+				}
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
 		}
 		return false;
 	});
