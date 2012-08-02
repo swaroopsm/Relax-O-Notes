@@ -189,9 +189,17 @@ $(document).ready(function(){
 	$(".discuss_comments").live("click",function(){
 		var id=$(this).attr("data-id");
 		id=id.substring(2);
+		console.log("id is: "+id);
 		$.getJSON("/"+$db+"/"+id,
 		function(data){
 			console.log(data);
+			$("#comments_title").html("Comments for: "+data.d_title).hide().show();
+			$("#comments_main").html();
+			for(var i=0;i<data.d_comments.length;i++){
+			$("#comments_main").append("<tr id=''><td class='span1'><a href='http://twitter.com/"+data.d_comments[i].name+"' id='' target='_BLANK'><img class='thumbnail' src='http://api.twitter.com/1/users/profile_image/"+data.d_comments[i].name+"'></img></a><td><a href='#'>"+data.d_comments[i].name+"</a><p>"+data.d_comments[i].msg+"</p></td></tr>");
+				//$("#comments_main").append(data.d_comments[i]+"<br>");
+			}
+			$("#comments_main").show();
 		});
 	});
 	
