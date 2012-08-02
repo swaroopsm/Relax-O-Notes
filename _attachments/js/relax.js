@@ -158,7 +158,7 @@ $(document).ready(function(){
 		else if(sub=="discuss"){
 			$.couch.db($db).openDoc(id,{
 			success: function(obj){
-				$("#all_discussions").prepend("<tr id="+id+"><td class='span1'><a href='http://twitter.com/"+obj.d_author+"' id='t"+id+"' rel='tooltip' data-original-title='by "+obj.d_author+"' target='_BLANK'><img class='thumbnail' src='"+obj.author_pic+"'></img></a><td><a href='#'>"+obj.d_title+"</a><p>"+obj.d_msg+"<br><span id='' title='"+obj.d_date+"' class='date_time-block'></span><a  href='#"+id+"' class='accordian-toggle help-block' data-toggle='collapse' style='color: #08c;margin-top: -8px;'>Comments("+obj.d_comments.length+")</a></p></td></tr>");
+				$("#all_discussions").prepend("<tr id="+id+"><td class='span1'><a href='http://twitter.com/"+obj.d_author+"' id='t"+id+"' rel='tooltip' data-original-title='by "+obj.d_author+"' target='_BLANK'><img class='thumbnail' src='"+obj.author_pic+"'></img></a><td><a href='#'>"+obj.d_title+"</a><p>"+obj.d_msg+"<br><span id='' title='"+obj.d_date+"' class='date_time-block'></span><a  href='#t"+id+"' class='discuss_comments' data-toggle='collapse' style='display:block;color: #08c;margin-top: -8px;'>Comments("+obj.d_comments.length+")</a></p></td></tr>");
 					$(".date_time-block").timeago();
 					$("#t"+id).tooltip('hide');
 			},
