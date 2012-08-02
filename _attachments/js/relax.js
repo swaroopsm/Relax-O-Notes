@@ -5,7 +5,8 @@ $(document).ready(function(){
 	
 	var p=$("#page_name").attr("data-page");
 	
-	$("#upload_file_btn").live("click", function(){
+	if(p=="index.html"){
+		$("#upload_file_btn").live("click", function(){
 		var d=new Date();
 		d=d.toISOString();
 		var tags=$("#upload_message").val().split(" ");
@@ -17,7 +18,6 @@ $(document).ready(function(){
 				k++;
 			}
 		}
-		console.log(act_tags);
 		act_tags=act_tags.substring(1,act_tags.length);
 		var doc={
 			"uploaded_by": $("#uploaded_by").val(),
@@ -40,8 +40,7 @@ $(document).ready(function(){
 		});
 		return false;
 	});
-	
-	if(p=="index.html"){
+		
 		$.couch.db($db).view("app/notes/",{
 			success: function(data){
 				$("#all_notes").html('');
@@ -74,28 +73,12 @@ $(document).ready(function(){
 		}
 	});
 	
-	$.couch.db($db).changes().onChange(function(data){
-		var id=data.results[0].id;
-		if(id=="_design/app"){
-			
-		}
-		else{
-		$.couch.db($db).openDoc(id,{
-			success: function(obj){
-				$("#all_notes").prepend("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a><p>"+obj.uploader_msg+"<br><span id='timeago' title='"+obj.created_at+"' class='date_time-block'></span></p></td></tr>").hide().fadeIn(500);
-				$(".date_time-block").timeago();
-			},
-			error: function(data2){
-				if(data2==404){
-					$("#"+id).fadeOut(500);
-				}
-			}
-		});
-	 }
-	});
 	}
 	
-	$("#discuss_btn").live("click",function(){
+	
+	else if(p=="discussion.html"){
+	
+		$("#discuss_btn").live("click",function(){
 		var th=$.trim($("#uploaded_by").val());
 		var dt=$.trim($("#discuss_title").val());
 		var dm=$.trim($("#discuss_message").val());
@@ -116,7 +99,10 @@ $(document).ready(function(){
 		else{
 			var d=new Date();
 			d=d.toISOString();
+			var uid=$.couch.newUUID();
+			uid="discuss_"+uid;
 			var doc={
+				"_id": uid,
 				"d_title": dt,
 				"d_author": th,
 				"d_msg": dm ,
@@ -138,9 +124,8 @@ $(document).ready(function(){
 		});
 		}
 		return false;
-	});
-	
-	if(p=="discussion.html"){
+	});	
+		
 		$.couch.db($db).view("app/discuss/",{
 			success: function(data){
 				console.log(data);
@@ -159,5 +144,46 @@ $(document).ready(function(){
 			}
 		});
 	}
+	
+	else{
+		
+	}
+	
+	$.couch.db($db).changes().onChange(function(data){
+		var id=data.results[0].id;
+		var sub=id.substring(0,7);
+		if(id=="_design/app"){
+			
+		}
+		else if(sub=="discuss"){
+			$.couch.db($db).openDoc(id,{
+			success: function(obj){
+				$("#all_discussions").prepend("<tr id="+id+"><td class='span1'><a href='http://twitter.com/"+obj.d_author+"' id='t"+id+"' rel='tooltip' data-original-title='by "+obj.d_author+"' target='_BLANK'><img class='thumbnail' src='"+obj.author_pic+"'></img></a><td><a href='#'>"+obj.d_title+"</a><p>"+obj.d_msg+"<br><span id='' title='"+obj.d_date+"' class='date_time-block'></span><a  href='#"+id+"' class='accordian-toggle help-block' data-toggle='collapse' style='color: #08c;margin-top: -8px;'>Comments("+obj.d_comments.length+")</a></p></td></tr>");
+					$(".date_time-block").timeago();
+					$("#t"+id).tooltip('hide');
+			},
+			error: function(data2){
+				console.log("Data is:"+data2);
+				if(data2==404){
+					$("#"+id).fadeOut(500);
+				}
+			}
+		});
+		}
+		else{
+		$.couch.db($db).openDoc(id,{
+			success: function(obj){
+				$("#all_notes").prepend("<tr id="+id+"><td class='span1'><img class='thumbnail' src='"+obj.gravatar_url+"'></img><td><a href='http://twitter.com/"+obj.uploaded_by+"' target='_BLANK'>"+obj.uploaded_by+"</a><p>"+obj.uploader_msg+"<br><span id='timeago' title='"+obj.created_at+"' class='date_time-block'></span></p></td></tr>").hide().fadeIn(500);
+				$(".date_time-block").timeago();
+			},
+			error: function(data2){
+				console.log("Data is:"+data2);
+				if(data2==404){
+					$("#"+id).fadeOut(500);
+				}
+			}
+		});
+	 }
+	});
 	
 });
