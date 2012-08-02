@@ -74,10 +74,7 @@
 					<h4 id="comments_title"></h4>
 				</div>
 				<div class="modal-body">
-					<table class="table" id="comments_main">
-					
-					</table>
-					<div class="form form-horizontal">
+					<div class="form form-horizontal" id="my_comment_box" style="display: none;">
 							<div class="control-group">
 				      <div class="controls">
 				        <div class="input-prepend">
@@ -92,10 +89,13 @@
 				      </div>
 				      <br>
 				    </div>
+				    <div class="modal-footer">
+							<button class="btn btn-success" id="add_comment">Add Comment</button>
+						</div>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-success" id="upload_file_btn">Tweet Message!</button>
+					<table class="table" id="comments_main">
+					
+					</table>
 				</div>
 			</div>
     	<!-- End of Comments Modal -->
