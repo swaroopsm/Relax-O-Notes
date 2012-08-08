@@ -103,12 +103,12 @@ $(document).ready(function(){
 			uid="discuss_"+uid;
 			var doc={
 				"_id": uid,
-				"d_title": dt,
-				"d_author": th,
-				"d_msg": dm ,
-				"d_date": d,
+				"title": dt,
+				"author": th,
+				"content": dm ,
+				"date": d,
 				"author_pic": "http://api.twitter.com/1/users/profile_image/"+th,
-				"d_comments": ""
+				"type": "discussion"
 			};
 			$.couch.db($db).saveDoc(doc,{
 			success: function(data){
