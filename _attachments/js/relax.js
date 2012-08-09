@@ -190,6 +190,15 @@ $(document).ready(function(){
 	$(".discuss_comments").live("click",function(){
 		var id=$(this).attr("data-id");
 		id=id.substring(2);
+		$.couch.db($db).view("app/comments/",{
+			success: function(data){
+				console.log(data);
+			},
+			error: function(err){
+				console.log(err);
+			},
+			key: id
+		});
 		$("#comments_main").html('').show();
 		$("#comments_title").html("Comments for: blablablah...&nbsp;&nbsp;&nbsp;(<a href='#' id='toggle_comment_box'>Add Comment</a>)").hide().show();
 		$("#comments_main").show();
