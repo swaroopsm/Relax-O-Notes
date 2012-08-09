@@ -158,7 +158,8 @@ $(document).ready(function(){
 		else if(sub=="discuss"){
 			$.couch.db($db).openDoc(id,{
 			success: function(obj){
-				$("#all_discussions").prepend("<tr id="+id+"><td class='span1'><a href='http://twitter.com/"+obj.d_author+"' id='t"+id+"' rel='tooltip' data-original-title='by "+obj.d_author+"' target='_BLANK'><img class='thumbnail' src='"+obj.author_pic+"'></img></a><td><a href='#'>"+obj.d_title+"</a><p>"+obj.d_msg+"<br><span id='' title='"+obj.d_date+"' class='date_time-block'></span><a  href='#t"+id+"' class='discuss_comments' data-toggle='collapse' style='display:block;color: #08c;margin-top: -8px;'>Comments("+obj.d_comments.length+")</a></p></td></tr>");
+				console.log(obj);
+				$("#all_discussions").prepend("<tr id="+id+"><td class='span1'><a href='http://twitter.com/"+obj.author+"' id='t"+id+"' rel='tooltip' data-original-title='by "+obj.author+"' target='_BLANK'><img class='thumbnail' src='"+obj.author_pic+"'></img></a><td><a href='#'>"+obj.title+"</a><p>"+obj.content+"<br><span id='' title='"+obj.date+"' class='date_time-block'></span><a  href='#t"+id+"' class='discuss_comments' data-toggle='collapse' style='display:block;color: #08c;margin-top: -8px;'>Comments(0)</a></p></td></tr>");
 					$(".date_time-block").timeago();
 					$("#t"+id).tooltip('hide');
 			},
@@ -190,15 +191,8 @@ $(document).ready(function(){
 		var id=$(this).attr("data-id");
 		id=id.substring(2);
 		$("#comments_main").html('').show();
-		$.getJSON("/"+$db+"/"+id,
-		function(data){
-			$("#comment_on_id").val(id);
-			$("#comments_title").html("Comments for: "+data.d_title+"&nbsp;&nbsp;&nbsp;(<a href='#' id='toggle_comment_box'>Add Comment</a>)").hide().show();
-			for(var i=0;i<data.d_comments.length;i++){
-			$("#comments_main").append("<tr id=''><td class='span1'><a href='http://twitter.com/"+data.d_comments[i].name+"' id='' target='_BLANK'><img class='thumbnail' src='http://api.twitter.com/1/users/profile_image/"+data.d_comments[i].name+"'></img></a><td><a href='#'>"+data.d_comments[i].name+"</a><p>"+data.d_comments[i].msg+"</p></td></tr>");
-			}
-			$("#comments_main").show();
-		});
+		$("#comments_title").html("Comments for: blablablah...&nbsp;&nbsp;&nbsp;(<a href='#' id='toggle_comment_box'>Add Comment</a>)").hide().show();
+		$("#comments_main").show();
 	});
 	
 	$("#toggle_comment_box").live("click",function(){
