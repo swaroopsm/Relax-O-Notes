@@ -190,10 +190,12 @@ $(document).ready(function(){
 	$(".discuss_comments").live("click",function(){
 		var id=$(this).attr("data-id");
 		id=id.substring(2);
+		$("#comment_on_id").val(id);
 		$.couch.db($db).view("app/comments/",{
 			success: function(data){
 				for(var i=0;i<data.rows.length;i++){
-					$("#comments_main").prepend("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+data.rows[i].value.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data.rows[i].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data.rows[i].value.avatar+"'></img></a><td><a href='#'>"+data.rows[i].value.author+"</a><p>"+data.rows[i].value.comment+"<br></p></td></tr>");
+					$("#comments_main").prepend("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+data.rows[i].value.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data.rows[i].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data.rows[i].value.avatar+"'></img></a><td><a href='#'>"+data.rows[i].value.author+"</a><p>"+data.rows[i].value.comment+"<br><span id='timeago' title='"+data.rows[i].value.created_at+"' class='date_time-block'></span></p></td></tr>");
+					$(".date_time-block").timeago();
 				}
 			},
 			error: function(err){
@@ -212,7 +214,24 @@ $(document).ready(function(){
 	
 	$("#add_comment").live("click",function(){
 		var did=$("#comment_on_id").val();
-		console.log(did);
+		var d=new Date();
+		d=d.toISOString();
+		var doc={
+			"type": "comment",
+			"author": $("#comment_by").val(),
+			"author_pic": "http://api.twitter.com/1/users/profile_image/"+$("#comment_by").val(),
+			"comment": $("#comment_msg").val(),
+			"date": d,
+			"discussion": did
+		}
+		$.couch.db($db).saveDoc(doc,{
+			success: function(data){
+				console.log(data);
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
 		$("#my_comment_box").slideUp(500);
 	});
 	
