@@ -133,7 +133,7 @@ $(document).ready(function(){
 				var val;
 				for(var i=0;i<data.total_rows;i++){
 					val=data.rows[i].value;
-					$("#all_discussions").append("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+val.author+"' id='t"+data.rows[i].id+"' rel='tooltip' data-original-title='by "+val.author+"' target='_BLANK'><img class='thumbnail' src='"+val.avatar+"'></img></a><td><a href='#'>"+val.title+"</a><p>"+val.content+"<br><span id='' title='"+val.created_at+"' class='date_time-block'></span><a  href='#comments_modal' data-discuss_title='"+data.rows[i].value.title+"' data-id='#t"+data.rows[i].id+"' class='discuss_comments' data-toggle='modal' style='display:block;color: #08c;margin-top: -8px;'>Comments(0)</a></p></td></tr>");
+					$("#all_discussions").append("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+val.author+"' id='t"+data.rows[i].id+"' rel='tooltip' data-original-title='by "+val.author+"' target='_BLANK'><img class='thumbnail' src='"+val.avatar+"'></img></a><td><a href='#'>"+val.title+"</a><p>"+val.content+"<br><span id='' title='"+val.created_at+"' class='date_time-block'></span><a  href='#comments_modal' data-discuss_title='"+data.rows[i].value.title+"' data-id='#t"+data.rows[i].id+"' class='discuss_comments' data-toggle='modal' style='display:block;color: #08c;margin-top: -8px;'>View Comments</a></p></td></tr>");
 					$(".date_time-block").timeago();
 					$("#t"+data.rows[i].id).tooltip('hide');
 				}
