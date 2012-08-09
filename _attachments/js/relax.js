@@ -216,7 +216,10 @@ $(document).ready(function(){
 		var did=$("#comment_on_id").val();
 		var d=new Date();
 		d=d.toISOString();
+		var uid=$.couch.newUUID();
+		uid="comment_"+uid;
 		var doc={
+			"_id": uid,
 			"type": "comment",
 			"author": $("#comment_by").val(),
 			"author_pic": "http://api.twitter.com/1/users/profile_image/"+$("#comment_by").val(),
