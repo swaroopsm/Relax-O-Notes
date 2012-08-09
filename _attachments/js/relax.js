@@ -192,7 +192,9 @@ $(document).ready(function(){
 		id=id.substring(2);
 		$.couch.db($db).view("app/comments/",{
 			success: function(data){
-				console.log(data);
+				for(var i=0;i<data.rows.length;i++){
+					$("#comments_main").prepend("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+data.rows[i].value.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data.rows[i].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data.rows[i].value.avatar+"'></img></a><td><a href='#'>"+data.rows[i].value.author+"</a><p>"+data.rows[i].value.comment+"<br></p></td></tr>");
+				}
 			},
 			error: function(err){
 				console.log(err);
