@@ -251,4 +251,10 @@ $(document).ready(function(){
 		$("#my_comment_box").slideUp(500);
 	});
 	
+	$(".discuss_main_title").live("click",function(){
+		var id=$(this).attr('href');
+		
+		return false;
+	});
+	
 });
