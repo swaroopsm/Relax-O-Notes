@@ -4997,3 +4997,9 @@ a.badge:hover {
   background-color: #e5e5e5;
   border-bottom: 1px solid #ffffff;
 }
+
+.notification{
+	left: 1000px;
+	top: 80px;
+	position:fixed;
+}
