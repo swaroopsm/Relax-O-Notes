@@ -176,6 +176,7 @@ $(document).ready(function(){
 				success: function(data){
 					$("#comments_main").prepend("<tr id="+data.id+"><td class='span1'><a href='http://twitter.com/"+data.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data.author+"' target='_BLANK'><img class='thumbnail' src='"+data.author_pic+"'></img></a><td><a href='#'>"+data.author+"</a><p>"+data.comment+"<br><span id='timeago' title='"+data.date+"' class='date_time-block'></span></p></td></tr>");
 					$(".date_time-block").timeago();
+					$("#notify").prepend("<span class='alert fade in' data-dismiss='alert'>You have a comment!</span><br><br><br>").hide().fadeIn(500);
 				},
 				error: function(err){
 					console.log(err);
