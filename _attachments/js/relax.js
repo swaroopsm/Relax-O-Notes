@@ -253,7 +253,20 @@ $(document).ready(function(){
 	
 	$(".discuss_main_title").live("click",function(){
 		var id=$(this).attr('href');
-		
+		id=id.substring(1);
+		$.couch.db($db).view("app/single_discuss",{
+			success: function(data){
+				console.log(data);
+				$("#toggle-main").html("<table class='table'><tr id="+data.rows[0].id+"><td class='span1'><a href='http://twitter.com/"+data.rows[0].value.author+"' id='t"+data.rows[0].id+"' rel='tooltip' data-original-title='by "+data.rows[0].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data.rows[0].value.avatar+"'></img></a><td><a href='#"+data.rows[0].id+"' class='discuss_main_title'>"+data.rows[0].value.title+"</a><p>"+data.rows[0].value.content+"<br><span id='' title='"+data.rows[0].value.created_at+"' class='date_time-block'></span><a  href='#comments_modal' data-discuss_title='"+data.rows[0].value.title+"' data-id='#t"+data.rows[0].id+"' class='discuss_comments' data-toggle='modal' style='display:block;color: #08c;margin-top: -8px;'>View Comments</a></p></td></tr></table>");
+				$(".date_time-block").timeago();
+				$("#t"+data.rows[0].id).tooltip('hide');
+				$("#toggle-main").hide().fadeIn(500);
+			},
+			error: function(err){
+				console.log(err);
+			},
+			key: id
+		});
 		return false;
 	});
 	
