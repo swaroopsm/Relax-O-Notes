@@ -304,7 +304,7 @@ $(document).ready(function(){
 		$("#upload_modal_control1").hide();
 		$("#upload_modal_control3").hide();
 		$("#upload_modal_control2").html("<input class='span' id='my_file' name='my_file' type='file'>").hide().fadeIn(500);
-		$("#upload_modal_footer").html("<button class='btn btn-success' id='upload_final_btn'>Upload &raquo;</button>").hide().fadeIn(500);
+		$("#upload_modal_footer").html("<button class='btn btn-success' id='upload_prev_btn'>&laquo; Previous</button><button class='btn btn-success' id='upload_final_btn'>Upload &raquo;</button>").hide().fadeIn(500);
 	});
 	
 });
