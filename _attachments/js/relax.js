@@ -133,7 +133,7 @@ $(document).ready(function(){
 				var val;
 				for(var i=0;i<data.total_rows;i++){
 					val=data.rows[i].value;
-					$("#all_discussions").append("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+val.author+"' id='t"+data.rows[i].id+"' rel='tooltip' data-original-title='by "+val.author+"' target='_BLANK'><img class='thumbnail' src='"+val.avatar+"'></img></a><td><a href='#"+data.rows[i].id+"' class='discuss_main_title'>"+val.title+"</a><p>"+val.content+"<br><span id='' title='"+val.created_at+"' class='date_time-block'></span><a  href='#comments_modal' data-discuss_title='"+data.rows[i].value.title+"' data-id='#t"+data.rows[i].id+"' class='discuss_comments' data-toggle='modal' style='display:block;color: #08c;margin-top: -8px;'>View Comments</a></p></td></tr>");
+					$("#all_discussions").append("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+val.author+"' id='t"+data.rows[i].id+"' rel='tooltip' data-original-title='by "+val.author+"' target='_BLANK'><img class='thumbnail' src='"+val.avatar+"'></img></a><td><a href='#"+data.rows[i].id+"' data-scroll='' class='discuss_main_title'>"+val.title+"</a><p>"+val.content+"<br><span id='' title='"+val.created_at+"' class='date_time-block'></span><a  href='#comments_modal' data-discuss_title='"+data.rows[i].value.title+"' data-id='#t"+data.rows[i].id+"' class='discuss_comments' data-toggle='modal' style='display:block;color: #08c;margin-top: -8px;'>View Comments</a></p></td></tr>");
 					$(".date_time-block").timeago();
 					$("#t"+data.rows[i].id).tooltip('hide');
 				}
@@ -177,7 +177,7 @@ $(document).ready(function(){
 					$(".date_time-block").timeago();
 					$.couch.db($db).view("app/get_discussid",{
 						success: function(data2){
-							$("#notify").prepend("<span class='alert fade in' data-dismiss='alert'><a class='discuss_main_title' href='#"+data2.rows[0].value.discuss_id+"'>New Comment</a></span><br><br><br>").hide().fadeIn(500);
+							$("#notify").prepend("<span class='alert fade in' data-dismiss='alert'><a class='discuss_main_title' data-scroll='my_"+id+"' href='#"+data2.rows[0].value.discuss_id+"'>New Comment</a></span><br><br><br>").hide().fadeIn(500);
 						},
 						error: function(err2){
 							console.log(err2);
@@ -261,6 +261,12 @@ $(document).ready(function(){
 	$(".discuss_main_title").live("click",function(){
 		var id=$(this).attr('href');
 		id=id.substring(1);
+		var com_id=$(this).attr('data-scroll');
+		get_all_comments(id,com_id);
+		return false;
+	});
+	
+	function get_all_comments(id,com_id){
 		$.couch.db($db).view("app/single_discuss",{
 			success: function(data){
 				$("#toggle-main").html("<table class='table'><tr id="+data.rows[0].id+"><td class='span1'><a href='http://twitter.com/"+data.rows[0].value.author+"' id='t"+data.rows[0].id+"' rel='tooltip' data-original-title='by "+data.rows[0].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data.rows[0].value.avatar+"'></img></a><td><a href='#"+data.rows[0].id+"' class='discuss_main_title'>"+data.rows[0].value.title+"</a><p>"+data.rows[0].value.content+"<br><span id='' title='"+data.rows[0].value.created_at+"' class='date_time-block'></span></p></td></tr></table>");
@@ -272,6 +278,10 @@ $(document).ready(function(){
 						for(var i=0;i<data2.rows.length;i++){
 					$("#my_comments").append("<table class='table' id='my_"+data2.rows[i].id+"'><tr id="+data2.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+data2.rows[i].value.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data2.rows[i].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data2.rows[i].value.avatar+"'></img></a><td><a href='http://twitter.com/"+data2.rows[i].value.author+"' target='_BLANK'>"+data2.rows[i].value.author+"</a><p>"+data2.rows[i].value.comment+"<br><span id='timeago' title='"+data2.rows[i].value.created_at+"' class='date_time-block'></span></p></td></tr></table>");
 					$(".date_time-block").timeago();
+				}
+				if(com_id!=''){
+					$('html, body').animate({ scrollTop: $("#"+com_id).offset().top -60 }, 'slow');
+					$("#"+com_id).css("background","#FCF8E3");
 				}
 					},
 					error: function(err2){
@@ -288,7 +298,6 @@ $(document).ready(function(){
 			},
 			key: id
 		});
-		return false;
-	});
+	}
 	
 });
