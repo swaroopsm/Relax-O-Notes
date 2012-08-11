@@ -158,13 +158,11 @@ $(document).ready(function(){
 		else if(sub=="discuss"){
 			$.couch.db($db).openDoc(id,{
 			success: function(obj){
-				console.log(obj);
 				$("#all_discussions").prepend("<tr id="+id+"><td class='span1'><a href='http://twitter.com/"+obj.author+"' id='t"+id+"' rel='tooltip' data-original-title='by "+obj.author+"' target='_BLANK'><img class='thumbnail' src='"+obj.author_pic+"'></img></a><td><a href='#'>"+obj.title+"</a><p>"+obj.content+"<br><span id='' title='"+obj.date+"' class='date_time-block'></span><a  href='#t"+id+"' class='discuss_comments' data-toggle='collapse' style='display:block;color: #08c;margin-top: -8px;'>Comments(0)</a></p></td></tr>");
 					$(".date_time-block").timeago();
 					$("#t"+id).tooltip('hide');
 			},
 			error: function(data2){
-				console.log("Data is:"+data2);
 				if(data2==404){
 					$("#"+id).fadeOut(500);
 				}
@@ -172,11 +170,20 @@ $(document).ready(function(){
 		});
 		}
 		else if(sub=="comment"){
+			var change_id;
 			$.couch.db($db).openDoc(id,{
 				success: function(data){
 					$("#comments_main").prepend("<tr id="+data.id+"><td class='span1'><a href='http://twitter.com/"+data.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data.author+"' target='_BLANK'><img class='thumbnail' src='"+data.author_pic+"'></img></a><td><a href='#'>"+data.author+"</a><p>"+data.comment+"<br><span id='timeago' title='"+data.date+"' class='date_time-block'></span></p></td></tr>");
 					$(".date_time-block").timeago();
-					$("#notify").prepend("<span class='alert fade in' data-dismiss='alert'>You have a comment!</span><br><br><br>").hide().fadeIn(500);
+					$.couch.db($db).view("app/get_discussid",{
+						success: function(data2){
+							$("#notify").prepend("<span class='alert fade in' data-dismiss='alert'><a class='discuss_main_title' href='#"+data2.rows[0].value.discuss_id+"'>New Comment</a></span><br><br><br>").hide().fadeIn(500);
+						},
+						error: function(err2){
+							console.log(err2);
+						},
+						key: id
+					});
 				},
 				error: function(err){
 					console.log(err);
