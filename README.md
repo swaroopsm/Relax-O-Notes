@@ -1,9 +1,11 @@
 ## Relax-O-Notes
 
 		Relax-O-Notes is a CouchApp.
-				
-		It supports only posting of tweets that gets updated in real-time.
-		Also a discussion group with real-time update of comments
+		
+		Functions:		
+		Support of tweets.
+		A discussion group with real-time comments system.
+		Sharing of files.
 		
 ### Minimal Setup
     
