@@ -337,7 +337,7 @@ $(document).ready(function(){
 				my_rev=data.rev;
 				$("#first_upload_body").hide();
 				$("#second_upload_body").html("<form class='form form-horizontal' id='attachment_form' name='attachment_form' content-type='multipart/form-data'><div class='control-group'><div class='controls'><input class='span' id='_attachments' name='_attachments' type='file'></div><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><div class='controls'><input type='submit' class='btn btn-success' value='Upload &raquo;' id='file_btn'></div></div></form>").hide().fadeIn(500);
-				$("#upload_modal_footer").html('').hide().fadeIn(500);
+				$("#upload_modal_footer").hide();
 				console.log(data);
 			},
 			error: function(data){
@@ -366,6 +366,14 @@ $(document).ready(function(){
     success: function(resp) {
     	$("#loader").hide();
     	$("#file_btn").attr("disabled",false);
+    	$("#uploadModal").modal('toggle');
+    	$("#second_upload_body").hide();
+    	$("#file_author").val('');
+    	$("#file_title").val('');
+    	$("#file_description").val('');
+    	$("#_attachments").val('');
+    	$("#first_upload_body").show();
+    	$("#upload_modal_footer").show();
       console.log(resp);
     },
     error: function(err){
