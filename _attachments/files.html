@@ -5,7 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 </head>
 <body>
-	 <div class="navbar navbar-fixed-top" id="page_name" data-page="discussion.html">
+	 <div class="navbar navbar-fixed-top" id="page_name" data-page="files.html">
       <div class="navbar-inner" style="padding-top: 10px;">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -27,7 +27,6 @@
           </div><!--/.nav-collapse -->
           <div class="nav pull-right" style="padding-left: 10px;">
           	<a data-toggle="modal" href="#uploadModal" class="btn btn-success">Upload File &raquo;</a>
-        		<a data-toggle="modal" href="#discussModal" class="btn btn-success">Discuss somethin! &raquo;</a>
         	</div>
         </div>
       </div>
@@ -78,90 +77,16 @@
 			</div>
     	<!-- End Upload File Modal Box -->
     	
-    	<!-- Discuss Modal Box -->
-    	<div class="modal hide fade" id="discussModal">
-				<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-					<h3>What's in your mind...</h3>
-				</div>
-				<div class="modal-body">
-					<div class="form form-horizontal">
-							<div class="control-group">
-				      <div class="controls">
-				        <div class="input-prepend">
-				          <span class="add-on"><i class="icon-user"></i></span><input class="span3" id="uploaded_by" type="text" placeholder="Your twitter handle">
-				        </div>
-				      </div>
-				      <br>
-				      <div class="controls">
-				        <div class="input-prepend">
-				          <span class="add-on"><i class="icon-pencil"></i></span><input class="span3" id="discuss_title" type="text" placeholder="Title of Discussion">
-				        </div>
-				      </div>
-				      <br>
-				       <div class="controls">
-				        <div class="input-prepend">
-				          <textarea id="discuss_message" class="span4" rows="6" placeholder="Description about your discussion"></textarea>
-				        </div>
-				      </div>
-				      <br>
-				    </div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-success" id="discuss_btn">Discuss!</button>
-				</div>
-			</div>
-    	<!-- End Discuss Modal Box -->
-    	
-    	
-    	<!-- Comments Modal -->
-    	<div class="modal hide fade" id="comments_modal">
-				<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">x</button>
-					<h4 id="comments_title"></h4>
-				</div>
-				<div class="modal-body">
-					<div class="form form-horizontal" id="my_comment_box" style="display: none;">
-							<div class="control-group">
-				      <div class="controls">
-				        <div class="input-prepend">
-				          <span class="add-on"><i class="icon-user"></i></span><input class="span3" id="comment_by" type="text" placeholder="Your twitter handle">
-				          <input class="span3" id="comment_on_id" type="hidden">
-				        </div>
-				      </div>
-				      <br>
-				       <div class="controls">
-				        <div class="input-prepend">
-				          <textarea id="comment_msg" rows="3" cols="34" placeholder="Your comment..."></textarea>
-				        </div>
-				      </div>
-				      <br>
-				    </div>
-				    <div class="modal-footer">
-							<button class="btn btn-success" id="add_comment">Add Comment</button>
-						</div>
-					</div>
-					<table class="table" id="comments_main">
-					
-					</table>
-				</div>
-			</div>
-    	<!-- End of Comments Modal -->
     <div class="span3 notification" id="notify"></div>
     <div class="container" style="padding-top: 80px;">
     <div id="toggle-main" class="span10">
     	<div id="messages" class="span11"></div>
     	<div class="span10">
-    		<h3>Latest Discussions: </h3>
-    		<table class="table" id="all_discussions">
+    		<h3>Latest Files: </h3>
+    		<table class="table" id="all_files">
     			
     		</table>
     	</div>
-    </div>
-    <div id='all_comments' class="span10" style="display: none;">
-   	 <span id='comments_header'></span>
-    	<div id="my_comments"></div>
     </div>
     </div>
     <script src="js/jquery.js"></script>
