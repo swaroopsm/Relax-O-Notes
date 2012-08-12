@@ -388,6 +388,18 @@ $(document).ready(function(){
 	
 	if(p=='files.html'){
 		console.log("You are on the files page!");
+		$.couch.db($db).view("app/files",{
+			success: function(data){
+				console.log(data);
+				/*var files=data.rows[0].value.file;
+				for(var j in files){
+					console.log(j);
+				}*/
+			},
+			error: function(err){
+				console.log(err);
+			}
+		})
 	}
 	
 });
