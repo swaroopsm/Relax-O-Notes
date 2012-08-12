@@ -190,6 +190,28 @@ $(document).ready(function(){
 				}
 			});
 		}
+		else if(sub="up_file"){
+			$.couch.db($db).openDoc(id,{
+				success: function(data){
+					var abc=data._rev.split('-');
+					if(abc[0]>1){
+						var val,filename;
+						console.log(data);
+					val=data;
+					for(var j in val._attachments){
+						filename=j;
+					}
+					$("#all_files").prepend("<tr id="+data._id+"><td class='span1'><a href='http://twitter.com/"+val.author+"' id='t"+data._id+"' rel='tooltip' data-original-title='by "+val.author+"' target='_BLANK'><img class='thumbnail' src='"+val.author_pic+"'></img></a><td><a href='#"+data._id+"' data-scroll='' class='files_main_title'>"+val.title+"</a><p>"+val.description+"<br><span id='' title='"+val.date+"' class='date_time-block'></span><a href='/"+$db+"/"+data._id+"/"+filename+"' target='_BLANK' title='"+filename+"' style='display:block;color: #08c;margin-top: -8px;'> <i class='icon-download-alt'></i> Download</a></p></td></tr>");
+					$(".date_time-block").timeago();
+					$("#t"+data._id).tooltip('hide');
+				$("#all_files").hide().fadeIn(500);
+					}
+				},
+				error: function(err){
+					console.log(err);
+				}
+			});
+		}
 		else{
 		$.couch.db($db).openDoc(id,{
 			success: function(obj){
@@ -339,7 +361,6 @@ $(document).ready(function(){
 				$("#first_upload_body").hide();
 				$("#second_upload_body").html("<form class='form form-horizontal' id='attachment_form' name='attachment_form' content-type='multipart/form-data'><div class='control-group'><div class='controls'><input class='span' id='_attachments' name='_attachments' type='file'></div><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><div class='controls'><input type='submit' class='btn btn-success' value='Upload &raquo;' id='file_btn'></div></div></form>").hide().fadeIn(500);
 				$("#upload_modal_footer").hide();
-				console.log(data);
 			},
 			error: function(data){
 				console.log(data);
@@ -375,7 +396,6 @@ $(document).ready(function(){
     	$("#_attachments").val('');
     	$("#first_upload_body").show();
     	$("#upload_modal_footer").show();
-      console.log(resp);
     },
     error: function(err){
     	$("#loader").hide();
@@ -387,11 +407,8 @@ $(document).ready(function(){
 });
 	
 	if(p=='files.html'){
-		console.log("You are on the files page!");
 		$.couch.db($db).view("app/files",{
 			success: function(data){
-				console.log(data);
-				
 				$("#all_files").html('');
 				var val,filename;
 				for(var i=0;i<data.total_rows;i++){
@@ -404,10 +421,6 @@ $(document).ready(function(){
 					$("#t"+data.rows[i].id).tooltip('hide');
 				}
 				$("#all_files").hide().fadeIn(500);
-				/*var files=data.rows[0].value.file;
-				for(var j in files){
-					console.log(j);
-				}*/
 			},
 			error: function(err){
 				console.log(err);
