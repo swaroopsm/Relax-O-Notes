@@ -329,6 +329,7 @@ $(document).ready(function(){
 			"author": fauthor,
 			"title": ftitle,
 			"description": fdesc,
+			"type": "file",
 			"author_pic": "http://api.twitter.com/1/users/profile_image/"+fauthor,
 			"date": d
 		};
