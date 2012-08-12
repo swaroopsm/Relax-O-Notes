@@ -299,7 +299,7 @@ $(document).ready(function(){
 				$("#t"+data.rows[0].id).tooltip('hide');
 				$.couch.db($db).view("app/comments",{
 					success: function(data2){
-						$("#comments_header").html('<h4>Comments: </h4>');
+						$("#comments_header").html('<h4>Comments('+data2.rows.length+'): </h4>');
 						for(var i=0;i<data2.rows.length;i++){
 					$("#my_comments").append("<table class='table' id='my_"+data2.rows[i].id+"'><tr id="+data2.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+data2.rows[i].value.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data2.rows[i].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data2.rows[i].value.avatar+"'></img></a><td><a href='http://twitter.com/"+data2.rows[i].value.author+"' target='_BLANK'>"+data2.rows[i].value.author+"</a><p>"+data2.rows[i].value.comment+"<br><span id='timeago' title='"+data2.rows[i].value.created_at+"' class='date_time-block'></span></p></td></tr></table>");
 					$(".date_time-block").timeago();
