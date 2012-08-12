@@ -321,7 +321,7 @@ $(document).ready(function(){
 		}
 		var uid=$.couch.newUUID();
 		var my_rev;
-		uid="file_"+uid;
+		uid="up_file_"+uid;
 		var d=new Date();
 		d=d.toISOString();
 		var doc={
@@ -391,6 +391,19 @@ $(document).ready(function(){
 		$.couch.db($db).view("app/files",{
 			success: function(data){
 				console.log(data);
+				
+				$("#all_files").html('');
+				var val,filename;
+				for(var i=0;i<data.total_rows;i++){
+					val=data.rows[i].value;
+					for(var j in val.file){
+						filename=j;
+					}
+					$("#all_files").append("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+val.author+"' id='t"+data.rows[i].id+"' rel='tooltip' data-original-title='by "+val.author+"' target='_BLANK'><img class='thumbnail' src='"+val.avatar+"'></img></a><td><a href='#"+data.rows[i].id+"' data-scroll='' class='files_main_title'>"+val.title+"</a><p>"+val.description+"<br><span id='' title='"+val.created_at+"' class='date_time-block'></span><a href='/"+$db+"/"+data.rows[i].id+"/"+filename+"' target='_BLANK' title='"+filename+"' style='display:block;color: #08c;margin-top: -8px;'> <i class='icon-download-alt'></i> Download</a></p></td></tr>");
+					$(".date_time-block").timeago();
+					$("#t"+data.rows[i].id).tooltip('hide');
+				}
+				$("#all_files").hide().fadeIn(500);
 				/*var files=data.rows[0].value.file;
 				for(var j in files){
 					console.log(j);
