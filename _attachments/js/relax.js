@@ -320,10 +320,11 @@ $(document).ready(function(){
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
 				my_rev=data.rev;
-				$("#upload_modal_control1").hide();
-		$("#upload_modal_control3").hide();
-		$("#upload_modal_control2").html("<form id='attachment_form' name='attachment_form' content-type='multipart/form-data'><input class='span' id='_attachments' name='_attachments' type='file'><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><input type='submit' value='Upload!' id='file_btn'></form>").hide().fadeIn(500);
-		$("#upload_modal_footer").html("<button class='btn btn-success' id='upload_prev_btn'>&laquo; Previous</button><button class='btn btn-success' id='upload_final_btn'>Upload &raquo;</button>").hide().fadeIn(500);
+				//$("#upload_modal_control1").hide();
+		//$("#upload_modal_control3").hide();
+		$("#first_upload_body").hide();
+		$("#second_upload_body").html("<form class='form form-horizontal' id='attachment_form' name='attachment_form' content-type='multipart/form-data'><div class='control-group'><div class='controls'><input class='span' id='_attachments' name='_attachments' type='file'></div><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><div class='controls'><input type='submit' class='btn btn-success' value='Upload &raquo;' id='file_btn'></div></div></form>").hide().fadeIn(500);
+		$("#upload_modal_footer").html('').hide().fadeIn(500);
 				console.log(data);
 			},
 			error: function(data){
