@@ -301,10 +301,57 @@ $(document).ready(function(){
 	}
 	
 	$("#upload_next_btn").live("click",function(){
-		$("#upload_modal_control1").hide();
+		var fauthor=$.trim($("#file_author").val());
+		var ftitle=$.trim($("#file_title").val());
+		var fdesc=$.trim($("#f_desc").val());
+		var uid=$.couch.newUUID();
+		var my_rev;
+		uid="file_"+uid;
+		var doc={
+			"_id": uid,
+			"author": fauthor,
+			"title": ftitle,
+			"description": fdesc
+		};
+		$.couch.db($db).saveDoc(doc,{
+			success: function(data){
+				my_rev=data.rev;
+				$("#upload_modal_control1").hide();
 		$("#upload_modal_control3").hide();
-		$("#upload_modal_control2").html("<input class='span' id='my_file' name='my_file' type='file'>").hide().fadeIn(500);
+		$("#upload_modal_control2").html("<form id='attachment_form' name='attachment_form' content-type='multipart/form-data'><input class='span' id='_attachments' name='_attachments' type='file'><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><input type='submit' value='Upload!' id='file_btn'></form>").hide().fadeIn(500);
 		$("#upload_modal_footer").html("<button class='btn btn-success' id='upload_prev_btn'>&laquo; Previous</button><button class='btn btn-success' id='upload_final_btn'>Upload &raquo;</button>").hide().fadeIn(500);
+				console.log(data);
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
 	});
+	
+	$("#attachment_form").live("submit",function(e) { // invoke callback on submit
+  e.preventDefault();
+  var data = {};
+  $.each($("form :input").serializeArray(), function(i, field) {
+    data[field.name] = field.value;
+  });
+  $("form :file").each(function() {
+    data[this.name] = this.value; // file inputs need special handling
+  });
+  if (!data._attachments || data._attachments.length == 0) {
+    alert("Please select a file to upload.");
+    return;
+  }
+  $(this).ajaxSubmit({
+    url:  "../../"+data._id,
+    success: function(resp) {
+      console.log(resp);
+    },
+    error: function(err){
+    	console.log("id "+data._id);
+    	console.log(err);
+    }
+  });
+  return false;
+});
 	
 });
