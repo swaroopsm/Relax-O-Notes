@@ -303,15 +303,19 @@ $(document).ready(function(){
 	$("#upload_next_btn").live("click",function(){
 		var fauthor=$.trim($("#file_author").val());
 		var ftitle=$.trim($("#file_title").val());
-		var fdesc=$.trim($("#f_desc").val());
+		var fdesc=$.trim($("#file_description").val());
 		var uid=$.couch.newUUID();
 		var my_rev;
 		uid="file_"+uid;
+		var d=new Date();
+		d=d.toISOString();
 		var doc={
 			"_id": uid,
 			"author": fauthor,
 			"title": ftitle,
-			"description": fdesc
+			"description": fdesc,
+			"author_pic": "http://api.twitter.com/1/users/profile_image/"+fauthor,
+			"date": d
 		};
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
