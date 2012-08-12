@@ -385,4 +385,8 @@ $(document).ready(function(){
   return false;
 });
 	
+	if(p=='files.html'){
+		console.log("You are on the files page!");
+	}
+	
 });
