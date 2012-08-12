@@ -304,6 +304,21 @@ $(document).ready(function(){
 		var fauthor=$.trim($("#file_author").val());
 		var ftitle=$.trim($("#file_title").val());
 		var fdesc=$.trim($("#file_description").val());
+		if(fauthor=='' || ftitle=='' || fdesc==''){
+			if(fauthor==''){
+				$("#file_author").focus();
+			}
+			else if(ftitle==''){
+				$("#file_title").focus();
+			}
+			else if(fdesc==''){
+				$("#file_description").focus();
+			}
+			else{
+					
+			}
+			return;
+		}
 		var uid=$.couch.newUUID();
 		var my_rev;
 		uid="file_"+uid;
@@ -320,11 +335,9 @@ $(document).ready(function(){
 		$.couch.db($db).saveDoc(doc,{
 			success: function(data){
 				my_rev=data.rev;
-				//$("#upload_modal_control1").hide();
-		//$("#upload_modal_control3").hide();
-		$("#first_upload_body").hide();
-		$("#second_upload_body").html("<form class='form form-horizontal' id='attachment_form' name='attachment_form' content-type='multipart/form-data'><div class='control-group'><div class='controls'><input class='span' id='_attachments' name='_attachments' type='file'></div><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><div class='controls'><input type='submit' class='btn btn-success' value='Upload &raquo;' id='file_btn'></div></div></form>").hide().fadeIn(500);
-		$("#upload_modal_footer").html('').hide().fadeIn(500);
+				$("#first_upload_body").hide();
+				$("#second_upload_body").html("<form class='form form-horizontal' id='attachment_form' name='attachment_form' content-type='multipart/form-data'><div class='control-group'><div class='controls'><input class='span' id='_attachments' name='_attachments' type='file'></div><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><div class='controls'><input type='submit' class='btn btn-success' value='Upload &raquo;' id='file_btn'></div></div></form>").hide().fadeIn(500);
+				$("#upload_modal_footer").html('').hide().fadeIn(500);
 				console.log(data);
 			},
 			error: function(data){
@@ -346,12 +359,17 @@ $(document).ready(function(){
     alert("Please select a file to upload.");
     return;
   }
+  $("#second_upload_body").prepend("<center><img id='loader' src='img/loader.gif'/></center>").hide().show();
+  $("#file_btn").attr("disabled","disabled");
   $(this).ajaxSubmit({
     url:  "../../"+data._id,
     success: function(resp) {
+    	$("#loader").hide();
+    	$("#file_btn").attr("disabled",false);
       console.log(resp);
     },
     error: function(err){
+    	$("#loader").hide();
     	console.log("id "+data._id);
     	console.log(err);
     }
