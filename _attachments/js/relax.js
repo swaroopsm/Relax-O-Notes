@@ -239,11 +239,13 @@ $(document).ready(function(){
 					$("#comments_main").prepend("<tr id="+data.rows[i].id+"><td class='span1'><a href='http://twitter.com/"+data.rows[i].value.author+"' id='c"+id+"' rel='tooltip' data-original-title='by "+data.rows[i].value.author+"' target='_BLANK'><img class='thumbnail' src='"+data.rows[i].value.avatar+"'></img></a><td><a href='#'>"+data.rows[i].value.author+"</a><p>"+data.rows[i].value.comment+"<br><span id='timeago' title='"+data.rows[i].value.created_at+"' class='date_time-block'></span></p></td></tr>");
 					$(".date_time-block").timeago();
 				}
+				$("#comments_main").append("<span><br><a href='#"+id+"' data-scroll='' class='discuss_main_title'><button class='btn btn-danger' style='width: 70px;'>More &raquo;</button></a></span>");
 			},
 			error: function(err){
 				console.log(err);
 			},
-			key: id
+			key: id,
+			limit: 4
 		});
 		$("#comments_main").html('').show();
 		$("#comments_title").html("Comments for: "+discuss_title+"&nbsp;&nbsp;&nbsp;(<a href='#' id='toggle_comment_box'>Add Comment</a>)").hide().show();
@@ -284,6 +286,7 @@ $(document).ready(function(){
 		var id=$(this).attr('href');
 		id=id.substring(1);
 		var com_id=$(this).attr('data-scroll');
+		$("#comments_modal").modal('hide');
 		get_all_comments(id,com_id);
 		return false;
 	});
