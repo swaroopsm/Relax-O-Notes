@@ -25,4 +25,15 @@ twttr.anywhere(function (T) {
   	twttr.anywhere.signOut();
   	window.location="index.html";
   });
+  
+  
 });
+
+function user_details(arg){
+ 	twttr.anywhere(function(Te) {
+  	if(Te.isConnected()){
+  		var t_user=Te.currentUser;
+  		console.log(t_user.data(arg));
+  	}
+  });
+}
