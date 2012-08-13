@@ -1,3 +1,6 @@
+var p=$("#page_name").attr('data-page');
+console.log(p);
+
 twttr.anywhere(function (T) {
 	if(T.isConnected()){
 		var user=T.currentUser;
