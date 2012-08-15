@@ -119,7 +119,7 @@ twttr.anywhere(function (T) {
   });
   $("#logout").live("click",function(){
   	twttr.anywhere.signOut();
-  	window.location="index.html";
+  	window.location=window.location.href;
   });
   
   
