@@ -3,6 +3,7 @@
 <head>
 	<title>Relax-O-Notes</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+	 <script src="js/apikey.js"></script>
 </head>
 <body>
 	 <div class="navbar navbar-fixed-top" id="page_name" data-page="index.html">
@@ -15,7 +16,7 @@
           </a>
           <a class="brand" href="#">Relax-O-Notes</a>
           <div class="nav-collapse">
-            <ul class="nav">
+            <ul class="nav" id="main-menu">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="discussion.html">Discussion Forum</a></li>
               <li><a href="files.html">Files</a></li>
@@ -25,8 +26,8 @@
                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
             </ul>
           </div><!--/.nav-collapse -->
-          <div class="nav pull-right" style="padding-left: 10px;">
-        		<a data-toggle="modal" href="#uploadModal" class="btn btn-success">Tweet &raquo;</a>
+          <div class="nav pull-right" style="padding-left: 10px;display: none;" id="peepin">
+        		
         	</div>
         </div>
       </div>
@@ -40,12 +41,6 @@
 				<div class="modal-body">
 					<div class="form form-horizontal">
 							<div class="control-group">
-				      <div class="controls">
-				        <div class="input-prepend">
-				          <span class="add-on"><i class="icon-user"></i></span><input class="span3" id="uploaded_by" type="text" placeholder="Your twitter handle">
-				        </div>
-				      </div>
-				      <br>
 				       <div class="controls">
 				        <div class="input-prepend">
 				          <textarea id="upload_message" rows="3" cols="34" placeholder="A brief description"></textarea>
@@ -68,6 +63,9 @@
     			
     		</table>
     	</div>
+    	<div class="span2" style="display: none;margin-top: -10px;padding-bottom: 10px;padding-left: 5px;" id="tweet_div">
+    		
+    	</div>
     	<div class="span2 well" style="padding: 5px 20px 10px 20px;">
     		<h4>#tags</h4>
     		<hr class="my_divider" />
@@ -79,10 +77,9 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.couch.js"></script>
-    <script src="js/apikey.js"></script>
     <script src="js/md5.js"></script>
-    <script src="js/relax.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/relax.js"></script>
     <script src="js/timeago.js"></script>
 </body>
 </html>
