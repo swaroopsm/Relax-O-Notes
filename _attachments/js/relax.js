@@ -43,54 +43,6 @@ $(document).ready(function(){
 	
 	else if(p=="discussion.html"){
 	
-		$("#discuss_btn").live("click",function(){
-		var th=$.trim($("#uploaded_by").val());
-		var dt=$.trim($("#discuss_title").val());
-		var dm=$.trim($("#discuss_message").val());
-		if(th=='' || dt=='' || dm==''){
-			if(th==''){
-				$("#uploaded_by").focus();
-			}
-			else if(dt==''){
-				$("#discuss_title").focus();
-			}
-			else if(dm==''){
-				$("#discuss_message").focus();
-			}
-			else{
-				
-			}
-		}
-		else{
-			var d=new Date();
-			d=d.toISOString();
-			var uid=$.couch.newUUID();
-			uid="discuss_"+uid;
-			var doc={
-				"_id": uid,
-				"title": dt,
-				"author": th,
-				"content": dm ,
-				"date": d,
-				"author_pic": "http://api.twitter.com/1/users/profile_image/"+th,
-				"type": "discussion"
-			};
-			$.couch.db($db).saveDoc(doc,{
-			success: function(data){
-				var id=data.id;
-				var stat=data.ok;
-				if(stat){
-					$("#discussModal").modal('hide');
-				}
-			},
-			error: function(data){
-				console.log(data);
-			}
-		});
-		}
-		return false;
-	});	
-		
 		$.couch.db($db).view("app/discuss/",{
 			success: function(data){
 				console.log(data);
