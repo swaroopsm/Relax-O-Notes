@@ -1,5 +1,4 @@
 var page=$("#page_name").attr('data-page');
-
 twttr.anywhere(function (T) {
 	if(T.isConnected()){
 		show_dropdown(T);
@@ -139,5 +138,9 @@ function show_dropdown(T){
 		if(page==="discussion.html"){
 			$("#main-menu").hide();
 			$("#discuss_btn_div").html('<a data-toggle="modal" href="#discussModal" style="" class="btn btn-success">Discuss &raquo;</a>').hide().fadeIn(500);
+		}
+		if(page==="files.html"){
+			$("#main-menu").hide();
+			$("#upload_btn_div").html('<a data-toggle="modal" href="#uploadModal" class="btn btn-success">Upload File &raquo;</a>').hide().fadeIn(500);
 		}
 }
