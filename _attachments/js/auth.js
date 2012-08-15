@@ -81,4 +81,8 @@ function show_dropdown(T){
 			$("#main-menu").hide();
 			$("#tweet_div").html('<a data-toggle="modal" href="#uploadModal" style="" class="btn btn-success">Tweet &raquo;</a>').hide().fadeIn(500);
 		}
+		if(page==="discussion.html"){
+			$("#main-menu").hide();
+			$("#discuss_btn_div").html('<a data-toggle="modal" href="#discussModal" style="" class="btn btn-success">Discuss &raquo;</a>').hide().fadeIn(500);
+		}
 }
