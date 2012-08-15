@@ -3,6 +3,44 @@ var page=$("#page_name").attr('data-page');
 twttr.anywhere(function (T) {
 	if(T.isConnected()){
 		show_dropdown(T);
+		$("#upload_file_btn").live("click", function(){
+		var user_name=T.currentUser.data('screen_name');
+		var d=new Date();
+		d=d.toISOString();
+		var tags=$("#upload_message").val().split(" ");
+		var act_tags="", k=0;
+		for(var j=0;j<tags.length;j++){
+			if(tags[j].indexOf('#') == 0){
+				act_tags=act_tags+" "+tags[j];
+				act_tags=act_tags.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+				k++;
+			}
+		}
+		act_tags=act_tags.substring(1,act_tags.length);
+		var uid=$.couch.newUUID();
+		uid="mytweet_"+uid;
+		var doc={
+			"_id": uid,
+			"uploaded_by": user_name,
+			"gravatar_url": "http://api.twitter.com/1/users/profile_image/"+user_name,
+			"uploader_msg": $("#upload_message").val(),
+			"created_at": d,
+			"tags": act_tags.split(" ")
+		};
+		$.couch.db($db).saveDoc(doc,{
+			success: function(data){
+				var id=data.id;
+				var stat=data.ok;
+				if(stat){
+					$("#uploadModal").modal('hide');
+				}
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
+		return false;
+	});
 	}
 	else{
 		$("#peepin").html('<a id="login" class="btn btn-success">Login &raquo;</a>').show();
@@ -22,16 +60,6 @@ twttr.anywhere(function (T) {
   
   
 });
-
-function user_details(arg){
- 	twttr.anywhere(function(Te) {
-  	if(Te.isConnected()){
-  		var t_user=Te.currentUser;
-  		console.log(t_user.data(arg));
-  	}
-  });
-}
-
 
 function show_dropdown(T){
 		var user=T.currentUser;
