@@ -3,8 +3,8 @@ var page=$("#page_name").attr('data-page');
 twttr.anywhere(function (T) {
 	if(T.isConnected()){
 		show_dropdown(T);
-		$("#upload_file_btn").live("click", function(){
 		var user_name=T.currentUser.data('screen_name');
+		$("#upload_file_btn").live("click", function(){
 		var d=new Date();
 		d=d.toISOString();
 		var tags=$("#upload_message").val().split(" ");
@@ -41,6 +41,52 @@ twttr.anywhere(function (T) {
 		});
 		return false;
 	});
+	
+	$("#discuss_btn").live("click",function(){
+		console.log(":)");
+		var dt=$.trim($("#discuss_title").val());
+		var dm=$.trim($("#discuss_message").val());
+		if(dt=='' || dm==''){
+			if(dt==''){
+				$("#discuss_title").focus();
+			}
+			else if(dm==''){
+				$("#discuss_message").focus();
+			}
+			else{
+				
+			}
+		}
+		else{
+			var d=new Date();
+			d=d.toISOString();
+			var uid=$.couch.newUUID();
+			uid="discuss_"+uid;
+			var doc={
+				"_id": uid,
+				"title": dt,
+				"author": user_name,
+				"content": dm ,
+				"date": d,
+				"author_pic": "http://api.twitter.com/1/users/profile_image/"+user_name,
+				"type": "discussion"
+			};
+			$.couch.db($db).saveDoc(doc,{
+			success: function(data){
+				var id=data.id;
+				var stat=data.ok;
+				if(stat){
+					$("#discussModal").modal('hide');
+				}
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
+		}
+		return false;
+	});	
+	
 	}
 	else{
 		$("#uploadModal").on("shown",function(){
