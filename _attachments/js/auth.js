@@ -43,7 +43,6 @@ twttr.anywhere(function (T) {
 	});
 	
 	$("#discuss_btn").live("click",function(){
-		console.log(":)");
 		var dt=$.trim($("#discuss_title").val());
 		var dm=$.trim($("#discuss_message").val());
 		if(dt=='' || dm==''){
@@ -92,10 +91,20 @@ twttr.anywhere(function (T) {
 		$("#uploadModal").on("shown",function(){
 			$("#upload_file_btn").live("click", function(){
 				if(T.isConnected()){
-					
+				
 				}else{
 					$("#uploadModal").modal('hide');
-				$("#messages").html("<div class='alert alert-danger'><a class='close' data-dismiss='alert' href='#'>&times;</a><center>You need to be logged in!</center></div>").hide().fadeIn(500);
+					$("#messages").html("<div class='alert alert-danger'><a class='close' data-dismiss='alert' href='#'>&times;</a><center>You need to be logged in!</center></div>").hide().fadeIn(500);
+				}
+			});
+		});
+		$("#discussModal").on("shown",function(){
+			$("#discuss_btn").live("click", function(){
+				if(T.isConnected()){
+				
+				}else{
+					$("#discussModal").modal('hide');
+					$("#messages").html("<div class='alert alert-danger'><a class='close' data-dismiss='alert' href='#'>&times;</a><center>You need to be logged in!</center></div>").hide().fadeIn(500);
 				}
 			});
 		});
