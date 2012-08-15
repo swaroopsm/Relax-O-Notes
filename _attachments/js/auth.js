@@ -187,7 +187,22 @@ twttr.anywhere(function (T) {
 			});
 		});
 		$("#uploadFileModal").on("shown",function(){
-			console.log("Acctive!!");
+			$("#upload_next_btn").live("click", function(){
+				if(T.isConnected()){
+				
+				}else{
+					$("#uploadFileModal").modal('hide');
+					$("#messages").html("<div class='alert alert-danger'><a class='close' data-dismiss='alert' href='#'>&times;</a><center>You need to be logged in!</center></div>").hide().fadeIn(500);
+				}
+			});
+			$("#attachment_form").live("submit",function() { 
+				if(T.isConnected()){
+				
+				}else{
+					$("#uploadFileModal").modal('hide');
+					$("#messages").html("<div class='alert alert-danger'><a class='close' data-dismiss='alert' href='#'>&times;</a><center>You need to be logged in!</center></div>").hide().fadeIn(500);
+				}
+			});
 		});
 		$("#peepin").html('<a id="login" class="btn btn-success">Login &raquo;</a>').show();
 	}
