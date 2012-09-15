@@ -85,6 +85,10 @@ twttr.anywhere(function (T) {
 		return false;
 	});	
 	
+	$("#toggle_comment_box").live("click",function(){
+		$("#my_comment_box").slideToggle(500);
+	});
+	
 	$("#upload_next_btn").live("click",function(){
 		var ftitle=$.trim($("#file_title").val());
 		var fdesc=$.trim($("#file_description").val());
