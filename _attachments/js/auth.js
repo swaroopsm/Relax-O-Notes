@@ -41,6 +41,33 @@ twttr.anywhere(function (T) {
 		return false;
 	});
 	
+	$("#add_comment").live("click",function(){
+		var did=$("#comment_on_id").val();
+		var d=new Date();
+		d=d.toISOString();
+		var uid=$.couch.newUUID();
+		uid="comment_"+uid;
+		var doc={
+			"_id": uid,
+			"type": "comment",
+			"author": user_name,
+			"author_pic": "http://api.twitter.com/1/users/profile_image/"+user_name,
+			"comment": $("#comment_msg").val(),
+			"date": d,
+			"discussion": did
+		}
+		
+		$.couch.db($db).saveDoc(doc,{
+			success: function(data){
+				console.log(data);
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+		$("#my_comment_box").slideUp(500);
+	});
+	
 	$("#discuss_btn").live("click",function(){
 		var dt=$.trim($("#discuss_title").val());
 		var dm=$.trim($("#discuss_message").val());
