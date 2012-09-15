@@ -170,9 +170,9 @@ $(document).ready(function(){
 		$("#comments_main").show();
 	});
 	
-	$("#toggle_comment_box").live("click",function(){
+	/*$("#toggle_comment_box").live("click",function(){
 		$("#my_comment_box").slideToggle(500);
-	});
+	});*/
 	
 	$("#add_comment").live("click",function(){
 		var did=$("#comment_on_id").val();
