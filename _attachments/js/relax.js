@@ -43,54 +43,6 @@ $(document).ready(function(){
 	
 	else if(p=="discussion.html"){
 	
-		$("#discuss_btn").live("click",function(){
-		var th=$.trim($("#uploaded_by").val());
-		var dt=$.trim($("#discuss_title").val());
-		var dm=$.trim($("#discuss_message").val());
-		if(th=='' || dt=='' || dm==''){
-			if(th==''){
-				$("#uploaded_by").focus();
-			}
-			else if(dt==''){
-				$("#discuss_title").focus();
-			}
-			else if(dm==''){
-				$("#discuss_message").focus();
-			}
-			else{
-				
-			}
-		}
-		else{
-			var d=new Date();
-			d=d.toISOString();
-			var uid=$.couch.newUUID();
-			uid="discuss_"+uid;
-			var doc={
-				"_id": uid,
-				"title": dt,
-				"author": th,
-				"content": dm ,
-				"date": d,
-				"author_pic": "http://api.twitter.com/1/users/profile_image/"+th,
-				"type": "discussion"
-			};
-			$.couch.db($db).saveDoc(doc,{
-			success: function(data){
-				var id=data.id;
-				var stat=data.ok;
-				if(stat){
-					$("#discussModal").modal('hide');
-				}
-			},
-			error: function(data){
-				console.log(data);
-			}
-		});
-		}
-		return false;
-	});	
-		
 		$.couch.db($db).view("app/discuss/",{
 			success: function(data){
 				console.log(data);
@@ -220,36 +172,6 @@ $(document).ready(function(){
 		$("#comments_main").show();
 	});
 	
-	$("#toggle_comment_box").live("click",function(){
-		$("#my_comment_box").slideToggle(500);
-	});
-	
-	$("#add_comment").live("click",function(){
-		var did=$("#comment_on_id").val();
-		var d=new Date();
-		d=d.toISOString();
-		var uid=$.couch.newUUID();
-		uid="comment_"+uid;
-		var doc={
-			"_id": uid,
-			"type": "comment",
-			"author": $("#comment_by").val(),
-			"author_pic": "http://api.twitter.com/1/users/profile_image/"+$("#comment_by").val(),
-			"comment": $("#comment_msg").val(),
-			"date": d,
-			"discussion": did
-		}
-		$.couch.db($db).saveDoc(doc,{
-			success: function(data){
-				console.log(data);
-			},
-			error: function(err){
-				console.log(err);
-			}
-		});
-		$("#my_comment_box").slideUp(500);
-	});
-	
 	$(".discuss_main_title").live("click",function(){
 		var id=$(this).attr('href');
 		id=id.substring(1);
@@ -292,90 +214,6 @@ $(document).ready(function(){
 			key: id
 		});
 	}
-	
-	$("#upload_next_btn").live("click",function(){
-		var fauthor=$.trim($("#file_author").val());
-		var ftitle=$.trim($("#file_title").val());
-		var fdesc=$.trim($("#file_description").val());
-		if(fauthor=='' || ftitle=='' || fdesc==''){
-			if(fauthor==''){
-				$("#file_author").focus();
-			}
-			else if(ftitle==''){
-				$("#file_title").focus();
-			}
-			else if(fdesc==''){
-				$("#file_description").focus();
-			}
-			else{
-					
-			}
-			return;
-		}
-		var uid=$.couch.newUUID();
-		var my_rev;
-		uid="up_file_"+uid;
-		var d=new Date();
-		d=d.toISOString();
-		var doc={
-			"_id": uid,
-			"author": fauthor,
-			"title": ftitle,
-			"description": fdesc,
-			"type": "file",
-			"author_pic": "http://api.twitter.com/1/users/profile_image/"+fauthor,
-			"date": d
-		};
-		$.couch.db($db).saveDoc(doc,{
-			success: function(data){
-				my_rev=data.rev;
-				$("#first_upload_body").hide();
-				$("#second_upload_body").html("<form class='form form-horizontal' id='attachment_form' name='attachment_form' content-type='multipart/form-data'><div class='control-group'><div class='controls'><input class='span' id='_attachments' name='_attachments' type='file'></div><input type='hidden' name='_id' value='"+uid+"'><input type='hidden' name='_rev' value='"+my_rev+"'><br><div class='controls'><input type='submit' class='btn btn-success' value='Upload &raquo;' id='file_btn'></div></div></form>").hide().fadeIn(500);
-				$("#upload_modal_footer").hide();
-			},
-			error: function(data){
-				console.log(data);
-			}
-		});
-	});
-	
-	$("#attachment_form").live("submit",function(e) { // invoke callback on submit
-  e.preventDefault();
-  var data = {};
-  $.each($("form :input").serializeArray(), function(i, field) {
-    data[field.name] = field.value;
-  });
-  $("form :file").each(function() {
-    data[this.name] = this.value; // file inputs need special handling
-  });
-  if (!data._attachments || data._attachments.length == 0) {
-    alert("Please select a file to upload.");
-    return;
-  }
-  $("#second_upload_body").prepend("<center><img id='loader' src='img/loader.gif'/></center>").hide().show();
-  $("#file_btn").attr("disabled","disabled");
-  $(this).ajaxSubmit({
-    url:  "../../"+data._id,
-    success: function(resp) {
-    	$("#loader").hide();
-    	$("#file_btn").attr("disabled",false);
-    	$("#uploadModal").modal('toggle');
-    	$("#second_upload_body").hide();
-    	$("#file_author").val('');
-    	$("#file_title").val('');
-    	$("#file_description").val('');
-    	$("#_attachments").val('');
-    	$("#first_upload_body").show();
-    	$("#upload_modal_footer").show();
-    },
-    error: function(err){
-    	$("#loader").hide();
-    	console.log("id "+data._id);
-    	console.log(err);
-    }
-  });
-  return false;
-});
 	
 	if(p=='files.html'){
 		$.couch.db($db).view("app/files",{
