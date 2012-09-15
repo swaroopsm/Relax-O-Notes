@@ -170,36 +170,6 @@ $(document).ready(function(){
 		$("#comments_main").show();
 	});
 	
-	/*$("#toggle_comment_box").live("click",function(){
-		$("#my_comment_box").slideToggle(500);
-	});*/
-	
-	$("#add_comment").live("click",function(){
-		var did=$("#comment_on_id").val();
-		var d=new Date();
-		d=d.toISOString();
-		var uid=$.couch.newUUID();
-		uid="comment_"+uid;
-		var doc={
-			"_id": uid,
-			"type": "comment",
-			"author": $("#comment_by").val(),
-			"author_pic": "http://api.twitter.com/1/users/profile_image/"+$("#comment_by").val(),
-			"comment": $("#comment_msg").val(),
-			"date": d,
-			"discussion": did
-		}
-		$.couch.db($db).saveDoc(doc,{
-			success: function(data){
-				console.log(data);
-			},
-			error: function(err){
-				console.log(err);
-			}
-		});
-		$("#my_comment_box").slideUp(500);
-	});
-	
 	$(".discuss_main_title").live("click",function(){
 		var id=$(this).attr('href');
 		id=id.substring(1);
