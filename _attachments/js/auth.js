@@ -197,6 +197,7 @@ twttr.anywhere(function (T) {
 	
 	}
 	else{
+		$("#main-menu").hide().fadeIn(500);
 		$("#uploadModal").on("shown",function(){
 			$("#upload_file_btn").live("click", function(){
 				if(T.isConnected()){
